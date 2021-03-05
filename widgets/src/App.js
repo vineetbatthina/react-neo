@@ -1,6 +1,8 @@
 import React from 'react';
 import Accordion from './components/Accordion';
 import Search from './components/Search';
+import Dropdown from './components/Dropdown';
+
 const items = [
     {
         title: 'Iron Man',
@@ -16,12 +18,27 @@ const items = [
     },
 ];
 
+const options = [
+    {
+        label: 'The Shield',
+        value: 'Rogers'
+    },
+    {
+        label: 'The Suit',
+        value: 'Tony Stark'
+    },
+    {
+        label: 'The Magic',
+        value: 'Wanda'
+    }
+];
 const returnApp = () =>
 {
     return(
         <div>
             <Accordion items={items} />
             <Search />
+            <Dropdown options={options}/>
         </div>
     );
 };
