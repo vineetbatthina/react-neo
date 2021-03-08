@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{ useState} from 'react';
 import Accordion from './components/Accordion';
 import Search from './components/Search';
 import Dropdown from './components/Dropdown';
@@ -32,16 +32,31 @@ const options = [
         value: 'Wanda'
     }
 ];
-const returnApp = () =>
+// const returnApp = () =>
+// {
+    
+
+//     return(
+//         <div>
+//             <Accordion items={items} />
+//             <Search />
+//             <Dropdown options={options}/>
+//         </div>
+//     );
+// };
+
+export default () =>
 {
-    return(
+    const [selected, setSelected] = useState(options[0]);
+
+    return (
         <div>
-            <Accordion items={items} />
-            <Search />
-            <Dropdown options={options}/>
+            <Dropdown 
+                selected ={selected}
+                onSelectedChange={setSelected}
+                options={options}
+            />
         </div>
     );
 };
-
-export default returnApp;
 
