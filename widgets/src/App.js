@@ -1,8 +1,11 @@
-import React,{ useState} from 'react';
+import React,{useState} from 'react';
 import Accordion from './components/Accordion';
 import Search from './components/Search';
 import Dropdown from './components/Dropdown';
 import Translate from './components/Translate'; 
+import Route from './components/Route';
+import Header from './components/Header';
+
 
 const items = [
     {
@@ -34,11 +37,43 @@ const options = [
     }
 ];
 
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+ var missingNumber = function(nums) {
+    nums.sort(function(a,b){
+         return (a-b);
+     });
+     for(let i=0;i<nums.length;i++){
+         if(nums[i]!==i){
+             return i;
+         }
+     }
+     return nums.length
+     
+ };
+
 const App = () =>
 {
+    const [selected, setSelected] = useState(options[0]);
+
     return (
     <div>
-        <Translate />
+        <Header />
+        <Route path="/">
+            <Accordion items={items}/>
+        </Route>
+        <Route path="/list">
+            <Search/>
+        </Route>
+        <Route path="/dropdown">
+            <Dropdown options={options} selected={selected} onSelectedChange={setSelected} label="Select your Avenger"/>
+        </Route>
+        <Route path="/translate">
+            <Translate />
+        </Route>
+        
     </div>
   );
 
