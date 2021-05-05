@@ -1,47 +1,34 @@
 import React , { useState, useEffect } from 'react';
 import SearchBar from './SearchBar';
-import youtube from '../api/youtube';
 import VideoList from './VideoList';
 import VideoDetail from './VideoDetail';
+import useVideos from '../hooks/useVideos';
 
 const App = () =>
 {
-    const [ videos , setVideos] = useState([]);
-    const [ selectedVideos , setSelectedVideos] = useState(null);
+    const [ selectedVideo , setSelectedVideo ] = useState(null);
+    const [videos, search] = useVideos('avengers');
 
-    const onTermSubmit = async (term) =>
-    {
-        const response = await youtube.get('/search',
-        {
-            params:{
-                q: term
-            }
-        });
-
-        this.setState({videos : response.data.items,
-            selectedVideo: response.data.items[0]
-        });
-    };
-
-    const onVideoSelect = (video) =>
-    {
-        this.setState({selectedVideo : video});
-    };
-
-    useEffect(() =>{
-        onTermSubmit('avengers');
-    },[]);
+    useEffect(() => {
+        setSelectedVideo(videos[0]);
+    }, [videos])
 
     return (
         <div className="ui container" style={{paddingTop:10}}>
-            <SearchBar onFormSubmit={this.onTermSubmit}/>
+            <SearchBar onFormSubmit={search}/>
             <div className="ui grid">
                 <div className="ui row">
                     <div className="eleven wide column">
-                        <VideoDetail video={this.state.selectedVideo}/>
+                        <VideoDetail video={selectedVideo}/>
                     </div>
                     <div className="five wide column">
-                        <VideoList onVideoSelect={this.onVideoSelect} videos={this.state.videos} />
+                        <VideoList 
+                            onVideoSelect= {(video) => setSelectedVideo(video)} 
+                            /*this can also be 
+                            onVideoSelect= {setSelectedVideo} 
+                            */
+                            videos={videos} 
+                        />
                     </div>
                 </div>
             </div>
